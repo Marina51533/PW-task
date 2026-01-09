@@ -1,19 +1,19 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { BasePage } from './basePage';
 
 export class LoginPage extends BasePage {
   // Locators
-  private readonly usernameInput = '[data-testid="username"]';
-  private readonly passwordInput = '[data-testid="password"]';
-  private readonly loginButton = '[data-testid="login-btn"]';
-  private readonly errorMessage = '[data-testid="error-msg"]';
+  private readonly usernameInput = '#Username';
+  private readonly passwordInput = '#Password';
+  private readonly loginButton = 'button[type="submit"]';
+  private readonly errorMessage = '[data-valmsg-summary="true"]';
 
   constructor(page: Page) {
     super(page);
   }
 
-  async navigateToLoginPage(url: string): Promise<void> {
-    await this.navigateTo(url);
+  async gotoLoginPage(): Promise<void> {
+    await this.navigateTo('https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/Account/Login');
   }
 
   async enterUsername(username: string): Promise<void> {
@@ -35,6 +35,7 @@ export class LoginPage extends BasePage {
   }
 
   async getErrorMessage(): Promise<string> {
+    await expect(this.page.locator(this.errorMessage)).toBeVisible();
     return await this.page.textContent(this.errorMessage) || '';
   }
 }

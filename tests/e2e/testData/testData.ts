@@ -1,8 +1,8 @@
 // Test data constants
 export const TEST_USERS = {
   VALID_USER: {
-    username: 'validUser',
-    password: 'validPass',
+    username: process.env.VALID_USERNAME!,
+    password: process.env.VALID_PASSWORD!,
   },
   INVALID_USER: {
     username: 'invalidUser',
@@ -12,6 +12,6 @@ export const TEST_USERS = {
 
 export const TEST_DATA = {
   ERROR_MESSAGES: {
-    INVALID_CREDENTIALS: 'Invalid credentials',
+    INVALID_CREDENTIALS: 'There were one or more problems that prevented you from logging in',
   },
 } as const;

@@ -1,18 +1,23 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('API Tests', () => {
-  test('should get user data', async ({ request }) => {
-    const response = await request.get('/api/users/1');
+  test('should login via API', async ({ request }) => {
+    const response = await request.get('/Account/Login', {
+      headers: {
+        'Authorization': process.env.AUTH_HEADER!,
+      },
+    });
     expect(response.ok()).toBeTruthy();
     const data = await response.json();
-    expect(data).toHaveProperty('id', 1);
+    expect(data).toHaveProperty('success', true); // Assuming response structure
   });
 
-  test('should create a new user', async ({ request }) => {
-    const newUser = { name: 'John Doe', email: 'john@example.com' };
-    const response = await request.post('/api/users', { data: newUser });
-    expect(response.status()).toBe(201);
-    const data = await response.json();
-    expect(data.name).toBe(newUser.name);
+  test('should fail login with invalid credentials', async ({ request }) => {
+    const response = await request.get('/Account/Login', {
+      headers: {
+        'Authorization': 'Basic aW52YWxpZDppbnZhbGlk', // invalid base64
+      },
+    });
+    expect(response.status()).toBe(401);
   });
 });

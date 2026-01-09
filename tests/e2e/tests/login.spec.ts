@@ -1,26 +1,23 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from '../fixtures/login';
 import { LoginPage } from '../pageObjects/LoginPage';
 import { TEST_USERS, TEST_DATA } from '../testData/testData';
 
 test.describe('Login Tests', () => {
-  let loginPage: LoginPage;
 
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    await loginPage.navigateToLoginPage('https://example.com/login'); // Replace with actual URL
+  test.beforeEach(async ({ page, loginPage}) => {
+    await loginPage.gotoLoginPage();
+    await expect(page).toHaveTitle('Log In - Paylocity Benefits Dashboard');
   });
 
-  test('should login with valid credentials', async ({ page }) => {
+  test('should login with valid credentials', async ({ page, loginPage }) => {
     await test.step('Login with valid credentials', async () => {
       await loginPage.login(TEST_USERS.VALID_USER.username, TEST_USERS.VALID_USER.password);
     });
-
-    await test.step('Verify successful login', async () => {
-      await expect(page).toHaveURL(/dashboard/);
-    });
+      await expect(page).toHaveURL(/Benefits/);
   });
 
-  test('should show error with invalid credentials', async () => {
+  test('should show error with invalid credentials', async ({ loginPage }) => {
     await test.step('Attempt login with invalid credentials', async () => {
       await loginPage.login(TEST_USERS.INVALID_USER.username, TEST_USERS.INVALID_USER.password);
     });

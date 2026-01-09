@@ -40,5 +40,8 @@
     "eslint-plugin-playwright": "^2.4.0",
     "globals": "^17.0.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }
