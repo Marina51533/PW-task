@@ -1,0 +1,44 @@
+{
+  "name": "pw-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test tests/e2e",
+    "test:e2e:ui": "playwright test tests/e2e --ui",
+    "test:api": "playwright test tests/api",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marina51533/PW-task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Marina51533/PW-task/issues"
+  },
+  "homepage": "https://github.com/Marina51533/PW-task#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.52.0",
+    "@typescript-eslint/parser": "^8.52.0",
+    "allure-commandline": "^2.36.0",
+    "allure-playwright": "^3.4.4",
+    "eslint": "^9.39.2",
+    "eslint-plugin-playwright": "^2.4.0",
+    "globals": "^17.0.0",
+    "typescript": "^5.9.3"
+  }
+}
