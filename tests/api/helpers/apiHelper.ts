@@ -8,7 +8,11 @@ export class ApiHelper {
 
   constructor(request: APIRequestContext, baseURL: string = '') {
     this.request = request;
-    this.baseURL = baseURL || process.env.BASE_URL;
+    const resolvedBaseURL =
+      baseURL ||
+      process.env.BASE_URL ||
+      'https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod';
+    this.baseURL = resolvedBaseURL.replace(/\/+$/, '');
     this.authHeader = process.env.AUTH_HEADER || '';
   }
 

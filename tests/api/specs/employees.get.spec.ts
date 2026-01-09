@@ -26,11 +26,9 @@ test.describe('Employees API - GET', () => {
     const employees = await response.json();
     expect(Array.isArray(employees)).toBeTruthy();
 
-    if (employees.length > 0) {
-      employees.forEach((employee: Record<string, unknown>) => {
-        apiHelper.validateEmployeeStructure(employee);
-      });
-    }
+    employees.forEach((employee: Record<string, unknown>) => {
+      apiHelper.validateEmployeeStructure(employee);
+    });
   });
 
   test('GET /api/Employees/{id} returns created employee', async () => {

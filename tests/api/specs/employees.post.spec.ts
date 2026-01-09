@@ -30,11 +30,12 @@ test.describe('Employees API - POST', () => {
     expect(createdEmployee.username).toBeDefined();
     expect(typeof createdEmployee.username).toBe('string');
 
-    if (employeeData.firstName) expect(createdEmployee.firstName).toBe(employeeData.firstName);
-    if (employeeData.lastName) expect(createdEmployee.lastName).toBe(employeeData.lastName);
-    if (employeeData.dependants !== undefined) expect(createdEmployee.dependants).toBe(employeeData.dependants);
+    expect(createdEmployee.firstName).toBe(employeeData.firstName);
+    expect(createdEmployee.lastName).toBe(employeeData.lastName);
+    expect(createdEmployee.dependants).toBe(employeeData.dependants);
 
-    if (createdEmployee.id) createdEmployeeIds.push(createdEmployee.id);
+    expect(createdEmployee.id).toBeDefined();
+    createdEmployeeIds.push(createdEmployee.id);
   });
 
   test('POST /api/Employees creates employee with minimal required data', async () => {
@@ -50,7 +51,8 @@ test.describe('Employees API - POST', () => {
     expect(createdEmployee.firstName).toBeDefined();
     expect(createdEmployee.lastName).toBeDefined();
 
-    if (createdEmployee.id) createdEmployeeIds.push(createdEmployee.id);
+    expect(createdEmployee.id).toBeDefined();
+    createdEmployeeIds.push(createdEmployee.id);
   });
 
   test('POST /api/Employees creates employee with maximum dependants (32)', async () => {
@@ -63,7 +65,8 @@ test.describe('Employees API - POST', () => {
     apiHelper.validateEmployeeStructure(createdEmployee);
     expect(createdEmployee.dependants).toBe(32);
 
-    if (createdEmployee.id) createdEmployeeIds.push(createdEmployee.id);
+    expect(createdEmployee.id).toBeDefined();
+    createdEmployeeIds.push(createdEmployee.id);
   });
 
   test('Contract: POST should fail when username is missing (required by Swagger)', async () => {

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ApiHelper } from '../helpers/apiHelper';
 import { API_TEST_DATA } from '../testData/apiTestData';
+import type { UpdateEmployeeRequest } from '../testData/apiTestData';
 
 test.describe('Employees API - PUT', () => {
   let apiHelper: ApiHelper;
@@ -41,8 +42,8 @@ test.describe('Employees API - PUT', () => {
     const updatedEmployee = await updateResponse.json();
     apiHelper.validateEmployeeStructure(updatedEmployee);
 
-    if (updatePayload.firstName) expect(updatedEmployee.firstName).toBe(updatePayload.firstName);
-    if (updatePayload.lastName) expect(updatedEmployee.lastName).toBe(updatePayload.lastName);
+    expect(updatedEmployee.firstName).toBe(updatePayload.firstName);
+    expect(updatedEmployee.lastName).toBe(updatePayload.lastName);
   });
 
   test('Contract: PUT should fail when required fields are missing (partial payload)', async () => {
@@ -54,7 +55,7 @@ test.describe('Employees API - PUT', () => {
       firstName: 'Only',
       lastName: 'Partial',
       // username intentionally omitted
-    } as any);
+    });
 
     expect(response.ok()).toBeFalsy();
   });
@@ -69,7 +70,7 @@ test.describe('Employees API - PUT', () => {
       firstName: 'Extra',
       lastName: 'Put',
       extraField: 'should-not-be-accepted',
-    } as any);
+    } as unknown as UpdateEmployeeRequest);
 
     expect(response.ok()).toBeFalsy();
   });
