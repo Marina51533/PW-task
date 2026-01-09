@@ -6,7 +6,7 @@ export class LoginPage extends BasePage {
   private readonly usernameInput = '#Username';
   private readonly passwordInput = '#Password';
   private readonly loginButton = 'button[type="submit"]';
-  private readonly errorMessage = '[data-valmsg-summary="true"]';
+  private readonly errorMessage = '.text-danger';
 
   constructor(page: Page) {
     super(page);
