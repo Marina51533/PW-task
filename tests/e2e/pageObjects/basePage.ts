@@ -8,7 +8,7 @@ export class BasePage {
   }
 
   async navigateTo(url: string): Promise<void> {
-    await this.page.goto(url, { waitUntil: 'networkidle' });
+    await this.page.goto(url, { waitUntil: 'domcontentloaded' });
   }
 
   async waitForLoad(): Promise<void> {
