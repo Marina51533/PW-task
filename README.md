@@ -5,14 +5,20 @@ This is a Playwright test framework following best practices.
 ## Structure
 
 - `tests/e2e/`: End-to-end tests
-  - `api/`: API endpoint constants
+  - `config/`: Environment/config helpers (e.g., base URLs)
   - `fixtures/`: Reusable test setups (e.g., authentication)
   - `pageObjects/`: Page Object Model classes
   - `reporters/`: Custom reporters
   - `testData/`: Static data and files for tests
   - `tests/`: Test specifications (.spec.ts)
 - `tests/api/`: API tests
+  - `helpers/`: Shared API utilities (auth, request helpers, assertions)
+  - `testData/`: API test constants/data
   - `specs/`: API test specifications
+
+Project test-writing guidance:
+- `.github/instructions/e2e-tests.md`
+- `.github/instructions/api-tests.md`
 
 ## Running Tests
 
@@ -44,3 +50,5 @@ This is a Playwright test framework following best practices.
 - One assertion per test ideally
 - Use `test.step()` for logical grouping
 - Store test data in `test_data/`
+
+  (In this repo the folder is `tests/**/testData/`.)

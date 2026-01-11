@@ -2,7 +2,7 @@ import { test as base, Page } from '@playwright/test';
 import { LoginPage } from '../pageObjects/LoginPage';
 import { EmployeesPage } from '../pageObjects/EmployeesPage';
 
-// Custom fixtures example
+
 type TestFixtures = {
   authenticatedPage: Page;
   loginPage: LoginPage;

@@ -84,13 +84,13 @@ You can run E2E tests using the following npm scripts:
 **### Fixtures**
 
 - Use fixtures for setting up preconditions for tests.
-- The primary fixture is in `e2e/fixtures/login.ts`, which provides an authenticated `page` object for tests that require a logged-in user.
+- The primary fixture is in `tests/e2e/fixtures/testFixtures.ts`, which provides an authenticated `page` object for tests that require a logged-in user.
 
   ```typescript
 
   // e2e/tests/my.spec.ts
 
-  import { test } from "@/e2e/fixtures/login";
+  import { test } from "@/e2e/fixtures/testFixtures";
 
 
 

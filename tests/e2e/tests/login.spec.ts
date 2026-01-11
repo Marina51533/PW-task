@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from '../fixtures/login';
+import { test } from '../fixtures/testFixtures';
 import { TEST_USERS, TEST_DATA } from '../testData/testData';
 
 const loginErrorTestCases = [
