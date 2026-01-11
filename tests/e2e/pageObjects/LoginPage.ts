@@ -1,20 +1,24 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect, Locator } from '@playwright/test';
 import { BasePage } from './basePage';
 
 export class LoginPage extends BasePage {
   // Locators
-  private readonly usernameInput = '#Username';
-  private readonly passwordInput = '#Password';
-  private readonly loginButton = 'button[type="submit"]';
-  private readonly errorMessage = '.text-danger';
+  private readonly usernameInput: Locator;
+  private readonly passwordInput: Locator;
+  private readonly loginButton: Locator;
+  private readonly errorMessage: Locator;
 
   constructor(page: Page) {
     super(page);
+
+    this.usernameInput = this.page.locator('#Username');
+    this.passwordInput = this.page.locator('#Password');
+    this.loginButton = this.page.locator('button[type="submit"]');
+    this.errorMessage = this.page.locator('.text-danger');
   }
 
   async gotoLoginPage(): Promise<void> {
-    const baseUrl =
-      process.env.BASE_URL_PROD;
+    const baseUrl = process.env.BASE_URL_PROD;
 
     if (!baseUrl) {
       throw new Error('Environment variable BASE_URL_PROD is not defined.');
@@ -23,15 +27,15 @@ export class LoginPage extends BasePage {
   }
 
   async enterUsername(username: string): Promise<void> {
-    await this.page.fill(this.usernameInput, username);
+    await this.usernameInput.fill(username);
   }
 
   async enterPassword(password: string): Promise<void> {
-    await this.page.fill(this.passwordInput, password);
+    await this.passwordInput.fill(password);
   }
 
   async clickLoginButton(): Promise<void> {
-    await this.page.click(this.loginButton);
+    await this.loginButton.click();
   }
 
   async login(username: string, password: string): Promise<void> {
@@ -41,7 +45,7 @@ export class LoginPage extends BasePage {
   }
 
   async getErrorMessage(): Promise<string> {
-    await expect(this.page.locator(this.errorMessage)).toBeVisible();
-    return await this.page.textContent(this.errorMessage) || '';
+    await expect(this.errorMessage).toBeVisible();
+    return (await this.errorMessage.textContent()) || '';
   }
 }

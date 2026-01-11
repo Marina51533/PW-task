@@ -1,18 +1,29 @@
-import { Page, expect } from "@playwright/test";
+import { Page, expect, Locator } from "@playwright/test";
 import { BasePage } from "./basePage";
 
 export class EmployeesPage extends BasePage {
-  private readonly addButton = "#add";
-  private readonly employeeModal = "#employeeModal";
-  private readonly firstNameInput = "#firstName";
-  private readonly lastNameInput = "#lastName";
-  private readonly dependantsInput = "#dependants";
-  private readonly addEmployeeButton = "#addEmployee";
-  private readonly employeesTable = "#employeesTable";
-  private readonly tableBody = "#employeesTable tbody";
+  private readonly addButton: Locator;
+  private readonly employeeModal: Locator;
+  private readonly firstNameInput: Locator;
+  private readonly lastNameInput: Locator;
+  private readonly dependantsInput: Locator;
+  private readonly addEmployeeButton: Locator;
+  private readonly employeesTable: Locator;
+  private readonly tableBody: Locator;
+  private readonly tableRows: Locator;
 
   constructor(page: Page) {
     super(page);
+
+    this.addButton = this.page.locator("#add");
+    this.employeeModal = this.page.locator("#employeeModal");
+    this.firstNameInput = this.page.locator("#firstName");
+    this.lastNameInput = this.page.locator("#lastName");
+    this.dependantsInput = this.page.locator("#dependants");
+    this.addEmployeeButton = this.page.locator("#addEmployee");
+    this.employeesTable = this.page.locator("#employeesTable");
+    this.tableBody = this.page.locator("#employeesTable tbody");
+    this.tableRows = this.tableBody.locator("tr");
   }
 
   async gotoEmployeesPage(
@@ -31,27 +42,23 @@ export class EmployeesPage extends BasePage {
     lastName: string,
     dependants: number
   ): Promise<void> {
-    await this.page.fill(this.firstNameInput, firstName);
-    await this.page.fill(this.lastNameInput, lastName);
-    await this.page.fill(this.dependantsInput, dependants.toString());
+    await this.firstNameInput.fill(firstName);
+    await this.lastNameInput.fill(lastName);
+    await this.dependantsInput.fill(dependants.toString());
   }
 
   async isEmployeeInTable(
     firstName: string,
     lastName: string
   ): Promise<boolean> {
-    const tableVisible = await this.page
-      .locator(this.employeesTable)
-      .isVisible()
-      .catch(() => false);
+    const tableVisible = await this.employeesTable.isVisible().catch(() => false);
 
     if (!tableVisible) return false;
 
-    const rows = this.page.locator(`${this.tableBody} tr`);
-    const rowCount = await rows.count().catch(() => 0);
+    const rowCount = await this.tableRows.count().catch(() => 0);
 
     for (let index = 0; index < rowCount; index++) {
-      const row = rows.nth(index);
+      const row = this.tableRows.nth(index);
       const cells = row.locator("td");
       const cellCount = await cells.count().catch(() => 0);
 
@@ -77,21 +84,19 @@ export class EmployeesPage extends BasePage {
     lastName: string,
     dependants: number
   ): Promise<void> {
-    await this.page.locator(this.addButton).click({ timeout: 10_000 });
+    await this.addButton.click({ timeout: 10_000 });
 
     // Fail fast if the UI didn't react (prevents cryptic downstream failures).
-    await expect(this.page.locator(this.employeeModal)).toBeVisible({
+    await expect(this.employeeModal).toBeVisible({
       timeout: 10_000,
     });
 
     await this.fillEmployeeForm(firstName, lastName, dependants);
 
-    await expect(this.page.locator(this.firstNameInput)).toHaveValue(firstName);
-    await expect(this.page.locator(this.lastNameInput)).toHaveValue(lastName);
-    await expect(this.page.locator(this.dependantsInput)).toHaveValue(
-      dependants.toString()
-    );
+    await expect(this.firstNameInput).toHaveValue(firstName);
+    await expect(this.lastNameInput).toHaveValue(lastName);
+    await expect(this.dependantsInput).toHaveValue(dependants.toString());
 
-    await this.page.locator(this.addEmployeeButton).click({ timeout: 10_000 });
+    await this.addEmployeeButton.click({ timeout: 10_000 });
   }
 }
