@@ -1,10 +1,12 @@
 import { test as base, Page } from '@playwright/test';
 import { LoginPage } from '../pageObjects/LoginPage';
+import { EmployeesPage } from '../pageObjects/EmployeesPage';
 
 // Custom fixtures example
 type TestFixtures = {
   authenticatedPage: Page;
   loginPage: LoginPage;
+  employeesPage: EmployeesPage;
 };
 
 export const test = base.extend<TestFixtures>({
@@ -12,6 +14,11 @@ export const test = base.extend<TestFixtures>({
     const lp = new LoginPage(page);
     await use(lp);
   },
+  employeesPage: async ({ page }, use) => {
+    const ep = new EmployeesPage(page);
+    await use(ep);
+  },
+ 
   authenticatedPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();

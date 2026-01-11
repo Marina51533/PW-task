@@ -13,7 +13,13 @@ export class LoginPage extends BasePage {
   }
 
   async gotoLoginPage(): Promise<void> {
-    await this.navigateTo('https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/Account/Login');
+    const baseUrl =
+      process.env.BASE_URL_PROD;
+
+    if (!baseUrl) {
+      throw new Error('Environment variable BASE_URL_PROD is not defined.');
+    }
+    await this.navigateTo(new URL('Account/Login', baseUrl).toString());
   }
 
   async enterUsername(username: string): Promise<void> {

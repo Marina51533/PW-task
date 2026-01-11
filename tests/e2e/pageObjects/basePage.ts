@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page } from "@playwright/test";
 
 export class BasePage {
   protected page: Page;
@@ -7,11 +7,10 @@ export class BasePage {
     this.page = page;
   }
 
-  async navigateTo(url: string): Promise<void> {
-    await this.page.goto(url, { waitUntil: 'domcontentloaded' });
-  }
-
-  async waitForLoad(): Promise<void> {
-    await this.page.waitForLoadState('domcontentloaded');
+  async navigateTo(
+    url: string,
+    options?: Parameters<Page["goto"]>[1]
+  ): Promise<void> {
+    await this.page.goto(url, { waitUntil: "domcontentloaded", ...options });
   }
 }
