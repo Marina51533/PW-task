@@ -5,7 +5,6 @@ This is a Playwright test framework following best practices.
 ## Structure
 
 - `tests/e2e/`: End-to-end tests
-  - `config/`: Environment/config helpers (e.g., base URLs)
   - `fixtures/`: Reusable test setups (e.g., authentication)
   - `pageObjects/`: Page Object Model classes
   - `reporters/`: Custom reporters
@@ -17,6 +16,7 @@ This is a Playwright test framework following best practices.
   - `specs/`: API test specifications
 
 Project test-writing guidance:
+
 - `.github/instructions/e2e-tests.md`
 - `.github/instructions/api-tests.md`
 
